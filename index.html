@@ -218,17 +218,65 @@
         }
 
         async function downloadExcel() {
-            const selectedUni = document.getElementById('uni-filter').value;
-            let query = supabaseClient.from('data_laporan').select('*').order('NO', { ascending: true });
-            if (selectedUni) query = query.eq('UNIVERSITAS', selectedUni);
-            const { data } = await query;
-            if (!data) return;
-            const excelData = data.map(row => ({ "NO": row.NO, "IDENTITAS MAHASISWA": row.NAMA, "NIM": row.NIM, "PROGRAM STUDI": row["PROGRAM STUDI"], "PERGURUAN TINGGI": row.UNIVERSITAS, "LAPORAN PM": row.PENGABDIAN ? "SUDAH" : "BELUM", "LAPORAN KK": row.KEPEMIMPINAN ? "SUDAH" : "BELUM" }));
-            const ws = XLSX.utils.json_to_sheet(excelData);
-            const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, "Laporan");
-            XLSX.writeFile(wb, `Laporan_P4OP_${Date.now()}.xlsx`);
-        }
+    // 1. Ambil nilai filter yang sedang aktif di UI
+    const selectedUni = document.getElementById('uni-filter').value;
+    const filterType = document.getElementById('completeness-filter').value;
+
+    // Tampilkan loading sederhana atau ganti teks tombol agar user tahu proses sedang berjalan
+    const originalBtnText = event.target.innerHTML;
+    event.target.innerText = "PROSES...";
+    event.target.disabled = true;
+
+    // 2. Query ke Supabase TANPA .range() agar mengambil SEMUA data sesuai filter
+    let query = supabaseClient
+        .from('data_laporan')
+        .select('*')
+        .order('NO', { ascending: true });
+
+    if (selectedUni) {
+        query = query.eq('UNIVERSITAS', selectedUni);
+    }
+
+    const { data, error } = await query;
+
+    if (error || !data || data.length === 0) {
+        alert("Gagal mengambil data atau data kosong.");
+        event.target.innerHTML = originalBtnText;
+        event.target.disabled = false;
+        return;
+    }
+
+    // 3. Terapkan Filter Status Kelengkapan (Lengkap/Belum Lengkap) pada hasil query
+    let filteredDataForExcel = data;
+    if (filterType === 'complete') {
+        filteredDataForExcel = data.filter(i => i.PENGABDIAN === true && i.KEPEMIMPINAN === true);
+    } else if (filterType === 'incomplete') {
+        filteredDataForExcel = data.filter(i => i.PENGABDIAN !== true || i.KEPEMIMPINAN !== true);
+    }
+
+    // 4. Map data ke format Excel
+    const excelData = filteredDataForExcel.map(row => ({
+        "NO": row.NO,
+        "IDENTITAS MAHASISWA": row.NAMA,
+        "NIM": row.NIM,
+        "PROGRAM STUDI": row["PROGRAM STUDI"],
+        "PERGURUAN TINGGI": row.UNIVERSITAS,
+        "LAPORAN PM": row.PENGABDIAN === true ? "SUDAH KIRIM" : "BELUM KIRIM",
+        "LAPORAN KK": row.KEPEMIMPINAN === true ? "SUDAH KIRIM" : "BELUM KIRIM"
+    }));
+
+    // 5. Proses pembuatan file Excel
+    const ws = XLSX.utils.json_to_sheet(excelData);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Laporan Full Filter");
+
+    const timestamp = new Date().getTime();
+    XLSX.writeFile(wb, `Laporan_Full_P4OP_${timestamp}.xlsx`);
+
+    // Kembalikan tombol ke kondisi normal
+    event.target.innerHTML = originalBtnText;
+    event.target.disabled = false;
+}
 
         document.addEventListener('DOMContentLoaded', () => { initUniversitas(); fetchData(); updateGlobalStats(); });
     </script>
