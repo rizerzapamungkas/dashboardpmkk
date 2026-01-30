@@ -233,10 +233,10 @@ async function initUniversitas() {
                         <span class="text-[15px] font-bold text-blue-700 bg-blue-50 px-3 py-2 rounded-lg uppercase block w-fit border border-blue-100 not-italic leading-tight">${row.UNIVERSITAS}</span>
                     </td>
                     <td data-label="Laporan PM" class="text-center px-3">
-                        <span class="block w-full py-3 rounded-xl text-[10px] font-black tracking-widest not-italic text-center ${row.PENGABDIAN === true ? 'bg-emerald-500 text-white' : 'bg-rose-500 text-white'}">${row.PENGABDIAN === true ? 'SUDAH' : 'BELUM'}</span>
+                        <span class="block w-full py-3 rounded-xl text-[15px] font-black tracking-widest not-italic text-center ${row.PENGABDIAN === true ? 'bg-emerald-500 text-white' : 'bg-rose-500 text-white'}">${row.PENGABDIAN === true ? 'SUDAH' : 'BELUM'}</span>
                     </td>
                     <td data-label="Laporan KK" class="text-center px-3">
-                        <span class="block w-full py-3 rounded-xl text-[10px] font-black tracking-widest not-italic text-center ${row.KEPEMIMPINAN === true ? 'bg-emerald-500 text-white' : 'bg-rose-500 text-white'}">${row.KEPEMIMPINAN === true ? 'SUDAH' : 'BELUM'}</span>
+                        <span class="block w-full py-3 rounded-xl text-[15px] font-black tracking-widest not-italic text-center ${row.KEPEMIMPINAN === true ? 'bg-emerald-500 text-white' : 'bg-rose-500 text-white'}">${row.KEPEMIMPINAN === true ? 'SUDAH' : 'BELUM'}</span>
                     </td>
                 </tr>
             `).join('');
@@ -261,24 +261,83 @@ async function initUniversitas() {
         }
 
         async function downloadExcel() {
-            const btn = document.getElementById('download-btn');
-            const originalText = btn.innerHTML;
-            const selectedUni = document.getElementById('uni-filter').value;
-            const filterType = document.getElementById('completeness-filter').value;
-            btn.innerText = "PROSES..."; btn.disabled = true;
-            let query = supabaseClient.from('data_laporan').select('*');
+    const btn = document.getElementById('download-btn');
+    const originalText = btn.innerHTML;
+    
+    const selectedUni = document.getElementById('uni-filter').value;
+    const filterType = document.getElementById('completeness-filter').value;
+
+    btn.innerText = "PROSES...";
+    btn.disabled = true;
+
+    // Menampung semua hasil data
+    let allData = [];
+    let from = 0;
+    const step = 1000; // Supabase limit per request
+    let keepFetching = true;
+
+    try {
+        while (keepFetching) {
+            let query = supabaseClient
+                .from('data_laporan')
+                .select('*')
+                .order('NO', { ascending: true })
+                .range(from, from + step - 1);
+
             if (selectedUni) query = query.eq('UNIVERSITAS', selectedUni);
-            if (filterType === 'complete') query = query.eq('PENGABDIAN', true).eq('KEPEMIMPINAN', true);
-            else if (filterType === 'incomplete') query = query.or('PENGABDIAN.eq.false,KEPEMIMPINAN.eq.false');
-            const { data, error } = await query.order('NO', { ascending: true });
-            if (error || !data || data.length === 0) { alert("Gagal mengambil data."); btn.innerHTML = originalText; btn.disabled = false; return; }
-            const excelData = data.map(row => ({ "NO": row.NO, "IDENTITAS MAHASISWA": row.NAMA, "NIM": row.NIM, "PROGRAM STUDI": row["PROGRAM STUDI"], "PERGURUAN TINGGI": row.UNIVERSITAS, "LAPORAN PM": row.PENGABDIAN ? "SUDAH KIRIM" : "BELUM KIRIM", "LAPORAN KK": row.KEPEMIMPINAN ? "SUDAH KIRIM" : "BELUM KIRIM" }));
-            const ws = XLSX.utils.json_to_sheet(excelData);
-            const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, "Laporan");
-            XLSX.writeFile(wb, `Laporan_P4OP_Filter_${Date.now()}.xlsx`);
-            btn.innerHTML = originalText; btn.disabled = false;
+            
+            // Filter status dilakukan di database agar lebih efisien
+            if (filterType === 'complete') {
+                query = query.eq('PENGABDIAN', true).eq('KEPEMIMPINAN', true);
+            } else if (filterType === 'incomplete') {
+                query = query.or('PENGABDIAN.eq.false,KEPEMIMPINAN.eq.false');
+            }
+
+            const { data, error } = await query;
+
+            if (error) throw error;
+
+            if (data.length > 0) {
+                allData = [...allData, ...data];
+                from += step;
+                // Jika data yang didapat kurang dari 1000, berarti ini halaman terakhir
+                if (data.length < step) keepFetching = false;
+            } else {
+                keepFetching = false;
+            }
         }
+
+        if (allData.length === 0) {
+            alert("Tidak ada data yang ditemukan untuk filter ini.");
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+            return;
+        }
+
+        // Mapping data untuk Excel
+        const excelData = allData.map(row => ({
+            "NO": row.NO,
+            "IDENTITAS MAHASISWA": row.NAMA,
+            "NIM": row.NIM,
+            "PROGRAM STUDI": row["PROGRAM STUDI"],
+            "PERGURUAN TINGGI": row.UNIVERSITAS,
+            "LAPORAN PM": row.PENGABDIAN ? "SUDAH KIRIM" : "BELUM KIRIM",
+            "LAPORAN KK": row.KEPEMIMPINAN ? "SUDAH KIRIM" : "BELUM KIRIM"
+        }));
+
+        const ws = XLSX.utils.json_to_sheet(excelData);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "Laporan Lengkap");
+        XLSX.writeFile(wb, `Laporan_P4OP_Full_${Date.now()}.xlsx`);
+
+    } catch (err) {
+        console.error("Error saat unduh:", err);
+        alert("Terjadi kesalahan saat mengambil data.");
+    } finally {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+    }
+}
         document.addEventListener('DOMContentLoaded', () => { initUniversitas(); fetchData(); updateGlobalStats(); });
     </script>
 </body>
