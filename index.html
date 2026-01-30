@@ -12,24 +12,22 @@
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
         body { background-color: #f8fafc; font-family: 'Plus Jakarta Sans', sans-serif; color: #1e293b; }
         
-        /* Search Bar Styling */
         .ts-wrapper .ts-control { 
             border-radius: 0.75rem !important; 
             padding: 0 12px 0 45px !important; 
             border: 1px solid #e2e8f0 !important;
-            min-height: 48px !important;
-            display: flex; align-items: center; font-size: 14px !important;
+            min-height: 52px !important;
+            display: flex; align-items: center; font-size: 15px !important;
         }
 
         .search-container { position: relative; }
         .search-container::before {
             content: ""; position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
-            width: 20px; height: 20px; z-index: 10; pointer-events: none;
+            width: 22px; height: 22px; z-index: 10; pointer-events: none;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394a3b8'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z' /%3E%3C/svg%3E");
             background-repeat: no-repeat;
         }
 
-        /* Responsive & Table Alignment */
         @media (max-width: 768px) {
             thead { display: none; }
             tr { display: block; margin-bottom: 1rem; border: 1px solid #e2e8f0; border-radius: 1rem; background: white; padding: 1rem; }
@@ -39,94 +37,107 @@
 
         table { table-layout: fixed; width: 100%; border-collapse: collapse; }
         th { vertical-align: middle !important; text-align: center !important; font-size: 13px !important; }
-        td { vertical-align: middle !important; word-wrap: break-word; overflow-wrap: break-word; padding: 12px 10px !important; font-size: 15px !important; }
+        td { vertical-align: middle !important; word-wrap: break-word; overflow-wrap: break-word; padding: 14px 10px !important; font-size: 15px !important; }
         
-        .w-no { width: 45px; } 
-        .w-mhs { width: 22%; }
+        .w-no { width: 55px; } 
+        .w-mhs { width: 23%; }
         .w-prodi { width: 18%; }
         .w-uni { width: 18%; }
-        .w-status { width: 16%; }
+        .w-status { width: 15%; }
         .ts-wrapper.single .ts-control::after { display: none !important; }
     </style>
 </head>
 <body class="antialiased">
 
-    <div class="max-w-[1550px] mx-auto px-4 md:px-6 py-4 md:py-8">
-        <div class="flex flex-col lg:flex-row justify-between items-center gap-6 mb-8">
-            <div class="flex items-center gap-6 w-full lg:w-auto justify-center md:justify-start">
-                <img src="https://i.imgur.com/7QcgJj0.png" alt="Logo" class="h-20 w-auto object-contain">
+    <div class="max-w-[1550px] mx-auto px-6 py-8">
+        
+        <div class="flex flex-col lg:flex-row justify-between items-center gap-8 mb-10">
+            <div class="flex items-center gap-7 w-full lg:w-auto">
+                <img src="https://i.imgur.com/7QcgJj0.png" alt="Logo" class="h-24 w-auto object-contain">
                 <div>
-                    <h1 class="text-3xl font-black text-slate-900 uppercase tracking-tighter leading-tight">DASHBOARD PENGIRIMAN LAPORAN</h1>
-                    <p class="text-base font-bold text-slate-500 italic uppercase tracking-wide mt-1">Pusat Pelayanan Pendanaan Personal dan Operasional Pendidikan (P4OP)</p>
+                    <h1 class="text-4xl font-black text-slate-900 uppercase tracking-tighter leading-tight">DASHBOARD PENGIRIMAN LAPORAN</h1>
+                    <p class="text-xl font-bold text-slate-500 italic uppercase mt-1">Pusat Pelayanan Pendanaan Personal dan Operasional Pendidikan (P4OP)</p>
                 </div>
             </div>
 
-            <div class="flex flex-col items-center md:items-end gap-2 w-full lg:w-auto">
-                <div class="flex gap-4 w-full md:w-auto">
-                    <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm flex-1 md:w-44 text-center">
-                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">LAPORAN PM</p>
-                        <span id="percent-pm" class="text-2xl font-black text-emerald-600">0%</span>
-                        <div class="w-full bg-slate-100 h-1.5 rounded-full mt-2 overflow-hidden"><div id="bar-pm" class="bg-emerald-500 h-full" style="width: 0%"></div></div>
+            <div class="flex flex-col items-end gap-3 w-full lg:w-auto">
+                <div class="flex gap-5 w-full md:w-auto">
+                    <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm flex-1 md:w-48 text-center">
+                        <p class="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-1">LAPORAN PM</p>
+                        <span id="percent-pm" class="text-3xl font-black text-emerald-600">0%</span>
+                        <div class="w-full bg-slate-100 h-2 rounded-full mt-2 overflow-hidden">
+                            <div id="bar-pm" class="bg-emerald-500 h-full transition-all duration-1000" style="width: 0%"></div>
+                        </div>
                     </div>
-                    <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm flex-1 md:w-44 text-center">
-                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">LAPORAN KK</p>
-                        <span id="percent-kk" class="text-2xl font-black text-blue-600">0%</span>
-                        <div class="w-full bg-slate-100 h-1.5 rounded-full mt-2 overflow-hidden"><div id="bar-kk" class="bg-blue-500 h-full" style="width: 0%"></div></div>
+                    <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm flex-1 md:w-48 text-center">
+                        <p class="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-1">LAPORAN KK</p>
+                        <span id="percent-kk" class="text-3xl font-black text-blue-600">0%</span>
+                        <div class="w-full bg-slate-100 h-2 rounded-full mt-2 overflow-hidden">
+                            <div id="bar-kk" class="bg-blue-500 h-full transition-all duration-1000" style="width: 0%"></div>
+                        </div>
                     </div>
                 </div>
-                <p class="text-[10px] text-slate-400 font-extrabold italic pr-1 uppercase">Data otomatis terupdate setiap 30 menit.</p>
+                <p class="text-[12px] text-slate-400 font-extrabold italic pr-1 uppercase text-right">Data otomatis terupdate setiap 30 menit.</p>
             </div>
         </div>
 
-        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 mb-6">
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-end">
+        <div class="bg-white rounded-2xl p-7 shadow-sm border border-slate-200 mb-8">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-end">
                 <div class="md:col-span-7">
-                    <label class="block text-sm font-bold text-slate-700 uppercase tracking-widest mb-3">PERGURUAN TINGGI</label>
-                    <div class="search-container"><select id="uni-filter" autocomplete="off"></select></div>
+                    <label class="block text-sm font-bold text-slate-700 uppercase tracking-widest mb-3 ml-1">PERGURUAN TINGGI</label>
+                    <div class="search-container">
+                        <select id="uni-filter" autocomplete="off"></select>
+                    </div>
                 </div>
                 <div class="md:col-span-3">
-                    <label class="block text-sm font-bold text-slate-700 uppercase tracking-widest mb-3">FILTER STATUS</label>
-                    <select id="completeness-filter" onchange="resetAndFetch()" class="w-full bg-white border border-slate-200 rounded-xl px-3 h-[48px] text-sm font-semibold focus:ring-2 focus:ring-blue-500 outline-none cursor-pointer">
+                    <label class="block text-sm font-bold text-slate-700 uppercase tracking-widest mb-3 ml-1">FILTER STATUS</label>
+                    <select id="completeness-filter" onchange="resetAndFetch()" class="w-full bg-white border border-slate-200 rounded-xl px-4 h-[52px] text-base font-bold focus:ring-2 focus:ring-blue-500 outline-none cursor-pointer">
                         <option value="all">SEMUA LAPORAN</option>
                         <option value="complete">LAPORAN LENGKAP</option>
                         <option value="incomplete">LAPORAN BELUM LENGKAP</option>
                     </select>
                 </div>
                 <div class="md:col-span-2">
-                    <button onclick="downloadExcel()" class="w-full bg-slate-900 hover:bg-black text-white font-bold h-[48px] rounded-xl shadow-md flex items-center justify-center gap-2 text-xs uppercase tracking-widest">
+                    <button id="download-btn" onclick="downloadExcel()" class="w-full bg-slate-900 hover:bg-black text-white font-black h-[52px] rounded-xl shadow-lg flex items-center justify-center gap-2 text-xs uppercase tracking-widest">
                         UNDUH DATA
                     </button>
                 </div>
             </div>
         </div>
 
-        <div class="md:bg-white md:rounded-3xl md:shadow-sm md:border md:border-slate-200 overflow-hidden">
+        <div class="bg-slate-50 px-6 py-4 flex flex-col md:flex-row items-center justify-between gap-4 border border-b-0 border-slate-200 rounded-t-3xl">
+            <div class="text-xs font-bold text-slate-500 uppercase tracking-widest">
+                Menampilkan <span id="data-count-text" class="text-slate-900">0</span> data dari <span id="total-data-text" class="text-slate-900">0</span> data
+            </div>
+            <div class="flex items-center gap-2">
+                <button onclick="changePage(-1)" id="prev-btn" class="px-4 py-2 bg-white border border-slate-200 rounded-lg text-xs font-black disabled:opacity-30 disabled:cursor-not-allowed hover:bg-slate-50 transition-all uppercase">← Prev</button>
+                <div id="pagination-numbers" class="flex gap-1"></div>
+                <button onclick="changePage(1)" id="next-btn" class="px-4 py-2 bg-white border border-slate-200 rounded-lg text-xs font-black disabled:opacity-30 disabled:cursor-not-allowed hover:bg-slate-50 transition-all uppercase">Next →</button>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-b-3xl shadow-sm border border-slate-200 overflow-hidden">
             <div class="overflow-x-auto">
-                <table>
-                    <thead class="bg-slate-50 border-b border-slate-200">
-                        <tr class="uppercase tracking-widest">
-                            <th class="w-no px-2 py-6 font-black text-slate-700">No</th>
-                            <th class="w-mhs px-5 py-6 font-black text-slate-700 text-left">Identitas Mahasiswa</th>
-                            <th class="w-prodi px-5 py-6 font-black text-slate-700 text-left">Program Studi</th>
-                            <th class="w-uni px-5 py-6 font-black text-slate-700 text-left">Perguruan Tinggi</th>
-                            <th class="w-status px-2 py-6 font-black text-slate-700">Laporan PM</th>
-                            <th class="w-status px-2 py-6 font-black text-slate-700">Laporan KK</th>
+                <table id="main-data-table">
+                    <thead>
+                        <tr class="bg-slate-50 border-b border-slate-200 text-center uppercase tracking-widest text-slate-700">
+                            <th class="w-no px-2 py-6 font-black">No</th>
+                            <th class="w-mhs px-5 py-6 font-black text-left">Identitas Mahasiswa</th>
+                            <th class="w-prodi px-5 py-6 font-black text-left">Program Studi</th>
+                            <th class="w-uni px-5 py-6 font-black text-left">Perguruan Tinggi</th>
+                            <th class="w-status px-2 py-6 font-black">Laporan PM</th>
+                            <th class="w-status px-2 py-6 font-black">Laporan KK</th>
                         </tr>
                     </thead>
                     <tbody id="data-table-body" class="divide-y divide-slate-100 font-bold italic"></tbody>
                 </table>
             </div>
-
-            <div class="bg-slate-50 px-6 py-4 flex flex-col md:flex-row items-center justify-between gap-4 border-t border-slate-200">
-                <div class="text-xs font-bold text-slate-500 uppercase">Halaman <span id="current-page-text" class="text-slate-900">1</span></div>
-                <div class="flex items-center gap-2">
-                    <button onclick="changePage(-1)" id="prev-btn" class="px-4 py-2 bg-white border border-slate-200 rounded-lg text-xs font-black disabled:opacity-30 disabled:cursor-not-allowed hover:bg-slate-50 transition-all">← SEBELUMNYA</button>
-                    <button onclick="changePage(1)" id="next-btn" class="px-4 py-2 bg-white border border-slate-200 rounded-lg text-xs font-black disabled:opacity-30 disabled:cursor-not-allowed hover:bg-slate-50 transition-all">SELANJUTNYA →</button>
-                </div>
+            <div id="loading" class="hidden py-24 flex justify-center">
+                <div class="animate-spin rounded-full h-12 w-12 border-4 border-slate-100 border-t-blue-600"></div>
             </div>
-
-            <div id="loading" class="py-24 flex justify-center hidden"><div class="animate-spin rounded-full h-12 w-12 border-4 border-slate-100 border-t-blue-600"></div></div>
-            <div id="empty" class="py-24 text-center text-slate-400 font-black uppercase text-sm tracking-widest hidden">Data Kosong</div>
+            <div id="empty" class="hidden py-24 text-center text-slate-400 font-black uppercase text-sm tracking-widest">
+                Data tidak ditemukan
+            </div>
         </div>
     </div>
 
@@ -139,17 +150,20 @@
         const TOTAL_TARGET = 16920;
         const PAGE_SIZE = 50;
         let currentPage = 0;
-        let tsSelector, currentFilteredData = [];
+        let totalRows = 0;
+        let tsSelector;
 
         async function updateGlobalStats() {
             const { count: countPM } = await supabaseClient.from('data_laporan').select('*', { count: 'exact', head: true }).eq('PENGABDIAN', true);
             const { count: countKK } = await supabaseClient.from('data_laporan').select('*', { count: 'exact', head: true }).eq('KEPEMIMPINAN', true);
-            const percentPM = ((countPM / TOTAL_TARGET) * 100).toFixed(1);
-            const percentKK = ((countKK / TOTAL_TARGET) * 100).toFixed(1);
-            document.getElementById('percent-pm').innerText = percentPM + '%';
-            document.getElementById('bar-pm').style.width = percentPM + '%';
-            document.getElementById('percent-kk').innerText = percentKK + '%';
-            document.getElementById('bar-kk').style.width = percentKK + '%';
+            
+            const pPM = ((countPM / TOTAL_TARGET) * 100).toFixed(1);
+            const pKK = ((countKK / TOTAL_TARGET) * 100).toFixed(1);
+
+            document.getElementById('percent-pm').innerText = pPM + '%';
+            document.getElementById('bar-pm').style.width = pPM + '%';
+            document.getElementById('percent-kk').innerText = pKK + '%';
+            document.getElementById('bar-kk').style.width = pKK + '%';
         }
 
         async function initUniversitas() {
@@ -164,44 +178,69 @@
             }
         }
 
-        function resetAndFetch() { currentPage = 0; fetchData(); }
-        function changePage(delta) { currentPage += delta; if (currentPage < 0) currentPage = 0; fetchData(); window.scrollTo({ top: document.querySelector('table').offsetTop - 50, behavior: 'smooth' }); }
+        function resetAndFetch() { 
+            currentPage = 0; 
+            fetchData(); 
+        }
+
+        function changePage(delta) { 
+            currentPage += delta; 
+            if (currentPage < 0) currentPage = 0; 
+            fetchData(); 
+            window.scrollTo({ top: document.getElementById('main-data-table').offsetTop - 200, behavior: 'smooth' }); 
+        }
 
         async function fetchData() {
             const body = document.getElementById('data-table-body');
             const loading = document.getElementById('loading');
             const empty = document.getElementById('empty');
-            const prevBtn = document.getElementById('prev-btn');
-            const nextBtn = document.getElementById('next-btn');
+            
             body.innerHTML = ''; loading.classList.remove('hidden'); empty.classList.add('hidden');
 
-            const start = currentPage * PAGE_SIZE;
-            const end = start + PAGE_SIZE - 1;
             const selectedUni = document.getElementById('uni-filter').value;
             const filterType = document.getElementById('completeness-filter').value;
+            const start = currentPage * PAGE_SIZE;
+            const end = start + PAGE_SIZE - 1;
 
-            let query = supabaseClient.from('data_laporan').select('*').order('NO', { ascending: true });
+            // Membangun Query
+            let query = supabaseClient.from('data_laporan').select('*', { count: 'exact' });
+
             if (selectedUni) query = query.eq('UNIVERSITAS', selectedUni);
 
-            const { data, error } = await query.range(start, end);
+            if (filterType === 'complete') {
+                query = query.eq('PENGABDIAN', true).eq('KEPEMIMPINAN', true);
+            } else if (filterType === 'incomplete') {
+                query = query.or('PENGABDIAN.eq.false,KEPEMIMPINAN.eq.false');
+            }
+
+            const { data, error, count } = await query
+                .order('NO', { ascending: true })
+                .range(start, end);
+
             loading.classList.add('hidden');
-            if (error || !data || data.length === 0) { empty.classList.remove('hidden'); nextBtn.disabled = true; return; }
+            if (error || !data || data.length === 0) { 
+                empty.classList.remove('hidden'); 
+                totalRows = 0;
+                document.getElementById('total-data-text').innerText = "0";
+                document.getElementById('data-count-text').innerText = "0";
+                renderPageNumbers();
+                return; 
+            }
 
-            let filteredData = data;
-            if (filterType === 'complete') filteredData = data.filter(i => i.PENGABDIAN === true && i.KEPEMIMPINAN === true);
-            else if (filterType === 'incomplete') filteredData = data.filter(i => i.PENGABDIAN !== true || i.KEPEMIMPINAN !== true);
+            totalRows = count || 0;
+            document.getElementById('total-data-text').innerText = totalRows.toLocaleString();
+            document.getElementById('data-count-text').innerText = data.length;
+            document.getElementById('prev-btn').disabled = (currentPage === 0);
+            document.getElementById('next-btn').disabled = (end >= totalRows - 1);
+            
+            renderPageNumbers();
 
-            currentFilteredData = filteredData;
-            document.getElementById('current-page-text').innerText = currentPage + 1;
-            prevBtn.disabled = (currentPage === 0);
-            nextBtn.disabled = (data.length < PAGE_SIZE);
-
-            body.innerHTML = filteredData.map(row => `
-                <tr class="hover:bg-slate-50 border-b border-slate-50 transition-all">
-                    <td data-label="No" class="text-center font-extrabold text-slate-400 text-sm">${row.NO || '-'}</td>
+            body.innerHTML = data.map(row => `
+                <tr class="hover:bg-slate-50 transition-all border-b border-slate-50">
+                    <td data-label="No" class="text-center font-black text-slate-400 text-sm">${row.NO || '-'}</td>
                     <td data-label="Identitas Mahasiswa" class="px-5">
-                        <div class="font-bold text-slate-800 uppercase leading-tight text-[15px] not-italic">${row.NAMA}</div>
-                        <div class="text-[12px] text-slate-400 font-black mt-1 tracking-wider not-italic uppercase leading-none text-xs">NIM: ${row.NIM}</div>
+                        <div class="font-black text-slate-800 uppercase leading-tight text-[15px] not-italic">${row.NAMA}</div>
+                        <div class="text-[12px] text-slate-400 font-black mt-1 uppercase not-italic leading-none text-xs">NIM: ${row.NIM}</div>
                     </td>
                     <td data-label="Program Studi" class="px-5 text-slate-600 leading-snug not-italic text-[15px]">${row["PROGRAM STUDI"] || '-'}</td>
                     <td data-label="Perguruan Tinggi" class="px-5">
@@ -217,68 +256,75 @@
             `).join('');
         }
 
+        function renderPageNumbers() {
+            const container = document.getElementById('pagination-numbers');
+            container.innerHTML = '';
+            const totalPages = Math.ceil(totalRows / PAGE_SIZE);
+            if(totalPages <= 1) return;
+
+            let start = Math.max(0, currentPage - 2);
+            let end = Math.min(totalPages, start + 5);
+            if (end - start < 5) start = Math.max(0, end - 5);
+
+            for (let i = start; i < end; i++) {
+                if(i < 0) continue;
+                const btn = document.createElement('button');
+                btn.innerText = i + 1;
+                btn.className = `px-3 py-2 rounded-lg text-xs font-bold transition-all ${i === currentPage ? 'bg-slate-900 text-white shadow-md' : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50'}`;
+                btn.onclick = () => { currentPage = i; fetchData(); window.scrollTo({ top: document.getElementById('main-data-table').offsetTop - 200, behavior: 'smooth' }); };
+                container.appendChild(btn);
+            }
+        }
+
         async function downloadExcel() {
-    // 1. Ambil nilai filter yang sedang aktif di UI
-    const selectedUni = document.getElementById('uni-filter').value;
-    const filterType = document.getElementById('completeness-filter').value;
+            const btn = document.getElementById('download-btn');
+            const originalText = btn.innerHTML;
+            
+            const selectedUni = document.getElementById('uni-filter').value;
+            const filterType = document.getElementById('completeness-filter').value;
 
-    // Tampilkan loading sederhana atau ganti teks tombol agar user tahu proses sedang berjalan
-    const originalBtnText = event.target.innerHTML;
-    event.target.innerText = "PROSES...";
-    event.target.disabled = true;
+            btn.innerText = "PROSES...";
+            btn.disabled = true;
 
-    // 2. Query ke Supabase TANPA .range() agar mengambil SEMUA data sesuai filter
-    let query = supabaseClient
-        .from('data_laporan')
-        .select('*')
-        .order('NO', { ascending: true });
+            let query = supabaseClient.from('data_laporan').select('*');
 
-    if (selectedUni) {
-        query = query.eq('UNIVERSITAS', selectedUni);
-    }
+            if (selectedUni) query = query.eq('UNIVERSITAS', selectedUni);
+            if (filterType === 'complete') query = query.eq('PENGABDIAN', true).eq('KEPEMIMPINAN', true);
+            else if (filterType === 'incomplete') query = query.or('PENGABDIAN.eq.false,KEPEMIMPINAN.eq.false');
 
-    const { data, error } = await query;
+            const { data, error } = await query.order('NO', { ascending: true });
 
-    if (error || !data || data.length === 0) {
-        alert("Gagal mengambil data atau data kosong.");
-        event.target.innerHTML = originalBtnText;
-        event.target.disabled = false;
-        return;
-    }
+            if (error || !data || data.length === 0) {
+                alert("Gagal mengambil data atau data kosong.");
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                return;
+            }
 
-    // 3. Terapkan Filter Status Kelengkapan (Lengkap/Belum Lengkap) pada hasil query
-    let filteredDataForExcel = data;
-    if (filterType === 'complete') {
-        filteredDataForExcel = data.filter(i => i.PENGABDIAN === true && i.KEPEMIMPINAN === true);
-    } else if (filterType === 'incomplete') {
-        filteredDataForExcel = data.filter(i => i.PENGABDIAN !== true || i.KEPEMIMPINAN !== true);
-    }
+            const excelData = data.map(row => ({
+                "NO": row.NO,
+                "IDENTITAS MAHASISWA": row.NAMA,
+                "NIM": row.NIM,
+                "PROGRAM STUDI": row["PROGRAM STUDI"],
+                "PERGURUAN TINGGI": row.UNIVERSITAS,
+                "LAPORAN PM": row.PENGABDIAN ? "SUDAH KIRIM" : "BELUM KIRIM",
+                "LAPORAN KK": row.KEPEMIMPINAN ? "SUDAH KIRIM" : "BELUM KIRIM"
+            }));
 
-    // 4. Map data ke format Excel
-    const excelData = filteredDataForExcel.map(row => ({
-        "NO": row.NO,
-        "IDENTITAS MAHASISWA": row.NAMA,
-        "NIM": row.NIM,
-        "PROGRAM STUDI": row["PROGRAM STUDI"],
-        "PERGURUAN TINGGI": row.UNIVERSITAS,
-        "LAPORAN PM": row.PENGABDIAN === true ? "SUDAH KIRIM" : "BELUM KIRIM",
-        "LAPORAN KK": row.KEPEMIMPINAN === true ? "SUDAH KIRIM" : "BELUM KIRIM"
-    }));
+            const ws = XLSX.utils.json_to_sheet(excelData);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Laporan");
+            XLSX.writeFile(wb, `Laporan_P4OP_Filter_${Date.now()}.xlsx`);
 
-    // 5. Proses pembuatan file Excel
-    const ws = XLSX.utils.json_to_sheet(excelData);
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Laporan Full Filter");
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        }
 
-    const timestamp = new Date().getTime();
-    XLSX.writeFile(wb, `Laporan_Full_P4OP_${timestamp}.xlsx`);
-
-    // Kembalikan tombol ke kondisi normal
-    event.target.innerHTML = originalBtnText;
-    event.target.disabled = false;
-}
-
-        document.addEventListener('DOMContentLoaded', () => { initUniversitas(); fetchData(); updateGlobalStats(); });
+        document.addEventListener('DOMContentLoaded', () => { 
+            initUniversitas(); 
+            fetchData(); 
+            updateGlobalStats(); 
+        });
     </script>
 </body>
 </html>
