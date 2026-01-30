@@ -11,46 +11,31 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
         body { background-color: #f8fafc; font-family: 'Plus Jakarta Sans', sans-serif; color: #1e293b; }
-        
-        .ts-wrapper .ts-control { 
-            border-radius: 0.75rem !important; 
-            padding: 0 12px 0 45px !important; 
-            border: 1px solid #e2e8f0 !important;
-            min-height: 52px !important;
-            display: flex; align-items: center; font-size: 15px !important;
-        }
-
+        .ts-wrapper .ts-control { border-radius: 0.75rem !important; padding: 0 12px 0 45px !important; border: 1px solid #e2e8f0 !important; min-height: 52px !important; display: flex; align-items: center; font-size: 15px !important; }
         .search-container { position: relative; }
-        .search-container::before {
-            content: ""; position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
-            width: 22px; height: 22px; z-index: 10; pointer-events: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394a3b8'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z' /%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-        }
-
-        @media (max-width: 768px) {
-            thead { display: none; }
-            tr { display: block; margin-bottom: 1rem; border: 1px solid #e2e8f0; border-radius: 1rem; background: white; padding: 1rem; }
-            td { display: flex; justify-content: space-between; align-items: center; border: none !important; padding: 0.5rem 0 !important; text-align: right !important; width: 100% !important; }
-            td::before { content: attr(data-label); font-weight: 800; text-transform: uppercase; font-size: 10px; color: #94a3b8; text-align: left; }
+        .search-container::before { content: ""; position: absolute; left: 16px; top: 50%; transform: translateY(-50%); width: 22px; height: 22px; z-index: 10; pointer-events: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394a3b8'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z' /%3E%3C/svg%3E"); background-repeat: no-repeat; }
+        
+        @media (max-width: 768px) { 
+            thead { display: none; } 
+            tr { display: block; margin-bottom: 1rem; border: 1px solid #e2e8f0; border-radius: 1rem; background: white; padding: 1rem; } 
+            td { display: flex; justify-content: space-between; align-items: center; border: none !important; padding: 0.5rem 0 !important; text-align: right !important; width: 100% !important; } 
+            td::before { content: attr(data-label); font-weight: 800; text-transform: uppercase; font-size: 10px; color: #94a3b8; text-align: left; } 
+            
+            /* Penyesuaian Navigasi HP agar tidak keluar box */
+            #pagination-numbers button { padding: 0.4rem 0.6rem !important; min-width: 32px; font-size: 11px; }
+            #prev-btn, #next-btn { padding: 0.4rem 0.6rem !important; font-size: 10px !important; }
+            .bg-slate-50.px-6.py-4 { padding-left: 0.75rem !important; padding-right: 0.75rem !important; }
         }
 
         table { table-layout: fixed; width: 100%; border-collapse: collapse; }
         th { vertical-align: middle !important; text-align: center !important; font-size: 13px !important; }
         td { vertical-align: middle !important; word-wrap: break-word; overflow-wrap: break-word; padding: 14px 10px !important; font-size: 15px !important; }
-        
-        .w-no { width: 55px; } 
-        .w-mhs { width: 23%; }
-        .w-prodi { width: 18%; }
-        .w-uni { width: 18%; }
-        .w-status { width: 15%; }
+        .w-no { width: 55px; } .w-mhs { width: 23%; } .w-prodi { width: 18%; } .w-uni { width: 18%; } .w-status { width: 15%; }
         .ts-wrapper.single .ts-control::after { display: none !important; }
     </style>
 </head>
 <body class="antialiased">
-
     <div class="max-w-[1550px] mx-auto px-6 py-8">
-        
         <div class="flex flex-col lg:flex-row justify-between items-center gap-8 mb-10">
             <div class="flex items-center gap-7 w-full lg:w-auto">
                 <img src="https://i.imgur.com/7QcgJj0.png" alt="Logo" class="hidden lg:block h-24 w-auto object-contain">
@@ -59,7 +44,6 @@
                     <p class="text-xl font-bold text-slate-500 italic uppercase mt-1">Pusat Pelayanan Pendanaan Personal dan Operasional Pendidikan (P4OP)</p>
                 </div>
             </div>
-
             <div class="flex flex-col items-end gap-3 w-full lg:w-auto">
                 <div class="flex gap-5 w-full md:w-auto">
                     <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm flex-1 md:w-48 text-center">
@@ -85,9 +69,7 @@
             <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-end">
                 <div class="md:col-span-7">
                     <label class="block text-sm font-bold text-slate-700 uppercase tracking-widest mb-3 ml-1">PERGURUAN TINGGI</label>
-                    <div class="search-container">
-                        <select id="uni-filter" autocomplete="off"></select>
-                    </div>
+                    <div class="search-container"><select id="uni-filter" autocomplete="off"></select></div>
                 </div>
                 <div class="md:col-span-3">
                     <label class="block text-sm font-bold text-slate-700 uppercase tracking-widest mb-3 ml-1">FILTER STATUS</label>
@@ -98,9 +80,7 @@
                     </select>
                 </div>
                 <div class="md:col-span-2">
-                    <button id="download-btn" onclick="downloadExcel()" class="w-full bg-slate-900 hover:bg-black text-white font-black h-[52px] rounded-xl shadow-lg flex items-center justify-center gap-2 text-xs uppercase tracking-widest">
-                        UNDUH DATA SESUAI FILTER
-                    </button>
+                    <button id="download-btn" onclick="downloadExcel()" class="w-full bg-slate-900 hover:bg-black text-white font-black h-[52px] rounded-xl shadow-lg flex items-center justify-center gap-2 text-xs uppercase tracking-widest">UNDUH DATA</button>
                 </div>
             </div>
         </div>
@@ -132,12 +112,8 @@
                     <tbody id="data-table-body" class="divide-y divide-slate-100 font-bold italic"></tbody>
                 </table>
             </div>
-            <div id="loading" class="hidden py-24 flex justify-center">
-                <div class="animate-spin rounded-full h-12 w-12 border-4 border-slate-100 border-t-blue-600"></div>
-            </div>
-            <div id="empty" class="hidden py-24 text-center text-slate-400 font-black uppercase text-sm tracking-widest">
-                Data tidak ditemukan
-            </div>
+            <div id="loading" class="hidden py-24 flex justify-center"><div class="animate-spin rounded-full h-12 w-12 border-4 border-slate-100 border-t-blue-600"></div></div>
+            <div id="empty" class="hidden py-24 text-center text-slate-400 font-black uppercase text-sm tracking-widest">Data tidak ditemukan</div>
         </div>
     </div>
 
@@ -156,10 +132,8 @@
         async function updateGlobalStats() {
             const { count: countPM } = await supabaseClient.from('data_laporan').select('*', { count: 'exact', head: true }).eq('PENGABDIAN', true);
             const { count: countKK } = await supabaseClient.from('data_laporan').select('*', { count: 'exact', head: true }).eq('KEPEMIMPINAN', true);
-            
             const pPM = ((countPM / TOTAL_TARGET) * 100).toFixed(1);
             const pKK = ((countKK / TOTAL_TARGET) * 100).toFixed(1);
-
             document.getElementById('percent-pm').innerText = pPM + '%';
             document.getElementById('bar-pm').style.width = pPM + '%';
             document.getElementById('percent-kk').innerText = pKK + '%';
@@ -178,79 +152,51 @@
             }
         }
 
-        function resetAndFetch() { 
-            currentPage = 0; 
-            fetchData(); 
-        }
-
-        function changePage(delta) { 
-            currentPage += delta; 
-            if (currentPage < 0) currentPage = 0; 
-            fetchData(); 
-            window.scrollTo({ top: document.getElementById('main-data-table').offsetTop - 200, behavior: 'smooth' }); 
-        }
+        function resetAndFetch() { currentPage = 0; fetchData(); }
+        function changePage(delta) { currentPage += delta; if (currentPage < 0) currentPage = 0; fetchData(); window.scrollTo({ top: document.getElementById('main-data-table').offsetTop - 200, behavior: 'smooth' }); }
 
         async function fetchData() {
             const body = document.getElementById('data-table-body');
             const loading = document.getElementById('loading');
             const empty = document.getElementById('empty');
-            
             body.innerHTML = ''; loading.classList.remove('hidden'); empty.classList.add('hidden');
-
             const selectedUni = document.getElementById('uni-filter').value;
             const filterType = document.getElementById('completeness-filter').value;
             const start = currentPage * PAGE_SIZE;
             const end = start + PAGE_SIZE - 1;
-
-            // Membangun Query
             let query = supabaseClient.from('data_laporan').select('*', { count: 'exact' });
-
             if (selectedUni) query = query.eq('UNIVERSITAS', selectedUni);
-
-            if (filterType === 'complete') {
-                query = query.eq('PENGABDIAN', true).eq('KEPEMIMPINAN', true);
-            } else if (filterType === 'incomplete') {
-                query = query.or('PENGABDIAN.eq.false,KEPEMIMPINAN.eq.false');
-            }
-
-            const { data, error, count } = await query
-                .order('NO', { ascending: true })
-                .range(start, end);
-
+            if (filterType === 'complete') query = query.eq('PENGABDIAN', true).eq('KEPEMIMPINAN', true);
+            else if (filterType === 'incomplete') query = query.or('PENGABDIAN.eq.false,KEPEMIMPINAN.eq.false');
+            const { data, error, count } = await query.order('NO', { ascending: true }).range(start, end);
             loading.classList.add('hidden');
             if (error || !data || data.length === 0) { 
                 empty.classList.remove('hidden'); 
-                totalRows = 0;
-                document.getElementById('total-data-text').innerText = "0";
-                document.getElementById('data-count-text').innerText = "0";
-                renderPageNumbers();
-                return; 
+                totalRows = 0; document.getElementById('total-data-text').innerText = "0"; document.getElementById('data-count-text').innerText = "0";
+                renderPageNumbers(); return; 
             }
-
             totalRows = count || 0;
             document.getElementById('total-data-text').innerText = totalRows.toLocaleString();
             document.getElementById('data-count-text').innerText = data.length;
             document.getElementById('prev-btn').disabled = (currentPage === 0);
             document.getElementById('next-btn').disabled = (end >= totalRows - 1);
-            
             renderPageNumbers();
-
             body.innerHTML = data.map(row => `
                 <tr class="hover:bg-slate-50 transition-all border-b border-slate-50">
                     <td data-label="No" class="text-center font-black text-slate-400 text-sm">${row.NO || '-'}</td>
-                    <td data-label="Identitas Mahasiswa" class="px-5">
-                        <div class="font-black text-slate-800 uppercase leading-tight text-[15px] not-italic">${row.NAMA}</div>
-                        <div class="text-[12px] text-slate-400 font-black mt-1 uppercase not-italic leading-none text-xs">NIM: ${row.NIM}</div>
+                    <td data-label="Identitas Mahasiswa" class="px-5 flex flex-col items-end md:items-start md:table-cell">
+                        <div class="font-black text-slate-800 uppercase leading-tight text-[15px] not-italic text-right md:text-left">${row.NAMA}</div>
+                        <div class="text-[12px] text-slate-400 font-black mt-1 uppercase not-italic leading-none text-right md:text-left">NIM: ${row.NIM}</div>
                     </td>
                     <td data-label="Program Studi" class="px-5 text-slate-600 leading-snug not-italic text-[15px]">${row["PROGRAM STUDI"] || '-'}</td>
                     <td data-label="Perguruan Tinggi" class="px-5">
                         <span class="text-[15px] font-bold text-blue-700 bg-blue-50 px-3 py-2 rounded-lg uppercase block w-fit border border-blue-100 not-italic leading-tight">${row.UNIVERSITAS}</span>
                     </td>
                     <td data-label="Laporan PM" class="text-center px-3">
-                        <span class="block w-full py-3 rounded-xl text-[15px] font-black tracking-widest not-italic ${row.PENGABDIAN === true ? 'bg-emerald-500 text-white' : 'bg-rose-500 text-white'}">${row.PENGABDIAN === true ? 'SUDAH' : 'BELUM'}</span>
+                        <span class="block w-full py-3 rounded-xl text-[10px] font-black tracking-widest not-italic text-center ${row.PENGABDIAN === true ? 'bg-emerald-500 text-white' : 'bg-rose-500 text-white'}">${row.PENGABDIAN === true ? 'SUDAH' : 'BELUM'}</span>
                     </td>
                     <td data-label="Laporan KK" class="text-center px-3">
-                        <span class="block w-full py-3 rounded-xl text-[15px] font-black tracking-widest not-italic ${row.KEPEMIMPINAN === true ? 'bg-emerald-500 text-white' : 'bg-rose-500 text-white'}">${row.KEPEMIMPINAN === true ? 'SUDAH' : 'BELUM'}</span>
+                        <span class="block w-full py-3 rounded-xl text-[10px] font-black tracking-widest not-italic text-center ${row.KEPEMIMPINAN === true ? 'bg-emerald-500 text-white' : 'bg-rose-500 text-white'}">${row.KEPEMIMPINAN === true ? 'SUDAH' : 'BELUM'}</span>
                     </td>
                 </tr>
             `).join('');
@@ -261,11 +207,9 @@
             container.innerHTML = '';
             const totalPages = Math.ceil(totalRows / PAGE_SIZE);
             if(totalPages <= 1) return;
-
             let start = Math.max(0, currentPage - 2);
             let end = Math.min(totalPages, start + 5);
             if (end - start < 5) start = Math.max(0, end - 5);
-
             for (let i = start; i < end; i++) {
                 if(i < 0) continue;
                 const btn = document.createElement('button');
@@ -279,55 +223,23 @@
         async function downloadExcel() {
             const btn = document.getElementById('download-btn');
             const originalText = btn.innerHTML;
-            
             const selectedUni = document.getElementById('uni-filter').value;
             const filterType = document.getElementById('completeness-filter').value;
-
-            btn.innerText = "PROSES...";
-            btn.disabled = true;
-
+            btn.innerText = "PROSES..."; btn.disabled = true;
             let query = supabaseClient.from('data_laporan').select('*');
-
             if (selectedUni) query = query.eq('UNIVERSITAS', selectedUni);
             if (filterType === 'complete') query = query.eq('PENGABDIAN', true).eq('KEPEMIMPINAN', true);
             else if (filterType === 'incomplete') query = query.or('PENGABDIAN.eq.false,KEPEMIMPINAN.eq.false');
-
             const { data, error } = await query.order('NO', { ascending: true });
-
-            if (error || !data || data.length === 0) {
-                alert("Gagal mengambil data atau data kosong.");
-                btn.innerHTML = originalText;
-                btn.disabled = false;
-                return;
-            }
-
-            const excelData = data.map(row => ({
-                "NO": row.NO,
-                "IDENTITAS MAHASISWA": row.NAMA,
-                "NIM": row.NIM,
-                "PROGRAM STUDI": row["PROGRAM STUDI"],
-                "PERGURUAN TINGGI": row.UNIVERSITAS,
-                "LAPORAN PM": row.PENGABDIAN ? "SUDAH KIRIM" : "BELUM KIRIM",
-                "LAPORAN KK": row.KEPEMIMPINAN ? "SUDAH KIRIM" : "BELUM KIRIM"
-            }));
-
+            if (error || !data || data.length === 0) { alert("Gagal mengambil data."); btn.innerHTML = originalText; btn.disabled = false; return; }
+            const excelData = data.map(row => ({ "NO": row.NO, "IDENTITAS MAHASISWA": row.NAMA, "NIM": row.NIM, "PROGRAM STUDI": row["PROGRAM STUDI"], "PERGURUAN TINGGI": row.UNIVERSITAS, "LAPORAN PM": row.PENGABDIAN ? "SUDAH KIRIM" : "BELUM KIRIM", "LAPORAN KK": row.KEPEMIMPINAN ? "SUDAH KIRIM" : "BELUM KIRIM" }));
             const ws = XLSX.utils.json_to_sheet(excelData);
             const wb = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(wb, ws, "Laporan");
             XLSX.writeFile(wb, `Laporan_P4OP_Filter_${Date.now()}.xlsx`);
-
-            btn.innerHTML = originalText;
-            btn.disabled = false;
+            btn.innerHTML = originalText; btn.disabled = false;
         }
-
-        document.addEventListener('DOMContentLoaded', () => { 
-            initUniversitas(); 
-            fetchData(); 
-            updateGlobalStats(); 
-        });
+        document.addEventListener('DOMContentLoaded', () => { initUniversitas(); fetchData(); updateGlobalStats(); });
     </script>
 </body>
 </html>
-
-
-
